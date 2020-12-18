@@ -11,19 +11,20 @@ class Passport(NamedTuple):
     hgt: str  # (Height)
     hcl: str  # (Hair Color)
     ecl: str  # (Eye Color)
-    pid: int  # (Passport ID)
+    pid: str  # (Passport ID)
     # cid: int # (Country ID)
 
 
 def check_passport(passport: Dict[str, str]) -> bool:
+    temp_pass: Dict[str, Union[str, int]] = {}
     for field, val in passport.items():
-        temp_pass: Dict[str, Union[str, int]] = {}
         newval: Union[int, str]
-        if field in ['byr', 'iyr', 'eyr', 'pid']:
+        if field in ['byr', 'iyr', 'eyr']:
             try:
                 newval = int(val)
             except Exception as ex:
-                print(f'invalid passport: {ex}')
+                print(f'bad type: {ex}')
+                print(field, val)
                 return False
         else:
             newval = val
